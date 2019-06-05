@@ -12,6 +12,8 @@ public class Car : MonoBehaviour {
 	public WheelCollider RRWheel;
 	public WheelCollider RLWheel;
 
+    public GameObject WheelSprite;
+
 	private Rigidbody rBody;
 	private float accInput;
     private float brakeInput;
@@ -30,25 +32,26 @@ public class Car : MonoBehaviour {
 	public Vector3 targetDirection;
 
 	private bool isReversing = false;
+    private WheelController wheelController;
 
 	void Start () {
 		rBody = GetComponent<Rigidbody> ();
         player = ReInput.players.GetPlayer(0);
-        Debug.Log(player.descriptiveName);
         rBody.centerOfMass = centerOfMass.localPosition;
-	}
-
-    private void Update()
-    {
-        wheelDirection = player.GetAxis("Wheel");
-        accInput = player.GetAxis("Accelerator");
-        brakeInput = player.GetAxis("Brake");
+        wheelController = WheelSprite.GetComponent<WheelController>();
 
     }
 
+    private void Update()
+    {
+        wheelDirection = wheelController.wheelDirection; //maneiro controls
+        accInput = player.GetAxis("Accelerator");
+        brakeInput = player.GetAxis("Brake");
+    }
+
     void FixedUpdate () {
-        Debug.Log(wheelDirection + " / " + accInput + "/ " + brakeInput);
-        Debug.Log(player.GetAxis("Wheel") + " / " + player.GetAxis("Accelerator") + "/ " + player.GetAxis("Brake"));
+        //Debug.Log(wheelDirection + " / " + accInput + "/ " + brakeInput);
+        //Debug.Log(player.GetAxis("Wheel") + " / " + player.GetAxis("Accelerator") + "/ " + player.GetAxis("Brake"));
         if (AWD)
             RWD = FWD = true;
 
@@ -91,6 +94,6 @@ public class Car : MonoBehaviour {
         
         FRWheel.steerAngle = wheelDirection * maxSteerAngle;
         FLWheel.steerAngle = wheelDirection * maxSteerAngle;
-
+        Debug.Log(FRWheel.steerAngle);
 	}
 }
