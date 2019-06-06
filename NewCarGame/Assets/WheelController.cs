@@ -12,16 +12,13 @@ public class WheelController : MonoBehaviour
     private float accumulatedRotation = 0f;
     private float lastRotation;
     private float rotationDiff;
+    private float lastTargetRotation;
 
     private Player player;
 
     private Quaternion defaultRotation;
     
     private float targetRotation;
-    
-    private bool isDirectionRight = false;
-    private int turnCountRight = 0;
-    private int turnCountLeft = 0;  
 
     // Start is called before the first frame update
     void Start()
@@ -45,11 +42,18 @@ public class WheelController : MonoBehaviour
 
         if (lookVec.x != 0 && lookVec.y != 0) //player is interacting
         {
-            targetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
+            if(lastTargetRotation == 0)
+            {
+                lastTargetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
+            }
+            float currentTargetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
+            targetRotation = currentTargetRotation;
+            //targetRotation = accumulatedRotation + (currentTargetRotation - lastTargetRotation);
             Debug.Log(targetRotation);
-        } else
+        } else //player has released the wheel
         {
-            if(accumulatedRotation != 0)
+            
+            if (accumulatedRotation != 0)
             {
                 targetRotation = accumulatedRotation * 0.9f;
                 while (targetRotation >= 360f)
@@ -65,7 +69,7 @@ public class WheelController : MonoBehaviour
                 {
                     targetRotation = 0f;
                 }
-                //Debug.Log(targetRotation);
+                lastTargetRotation = targetRotation;
             }
             
         }

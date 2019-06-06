@@ -40,7 +40,6 @@ public class Car : MonoBehaviour {
         player = ReInput.players.GetPlayer(0);
         rBody.centerOfMass = centerOfMass.localPosition;
         wheelController = WheelSprite.GetComponent<WheelController>();
-
     }
 
     public void Reset()
