@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using Rewired;
 using UnityEngine;
 
@@ -42,6 +43,11 @@ public class Car : MonoBehaviour {
 
     }
 
+    public void Reset()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     private void Update()
     {
         wheelDirection = wheelController.wheelDirection; //maneiro controls
@@ -65,7 +71,7 @@ public class Car : MonoBehaviour {
             FLWheel.motorTorque = accInput * engineTorque;
         }
         
-
+        //TODO: create reverse button on interface
 		if (rBody.velocity.magnitude < 2 && brakeInput > 0) {
 			isReversing = true;
 		}
@@ -94,6 +100,6 @@ public class Car : MonoBehaviour {
         
         FRWheel.steerAngle = wheelDirection * maxSteerAngle;
         FLWheel.steerAngle = wheelDirection * maxSteerAngle;
-        Debug.Log(FRWheel.steerAngle);
+        //Debug.Log(FRWheel.steerAngle);
 	}
 }

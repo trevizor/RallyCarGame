@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class WheelController : MonoBehaviour
 {
+    public float RotationAngle = 450f;
+    [HideInInspector]
+    public float wheelDirection;
+    private float currentRotation = 0f;
+    private float accumulatedRotation = 0f;
+    private float lastRotation;
+    private float rotationDiff;
+
     private Player player;
 
     private Quaternion defaultRotation;
-    private Vector3 lastRotation;
-    private Vector3 currentRotationSpeed;
-    private Vector3 targetRotation;
-    public float wheelDirection;
+    
+    private float targetRotation;
+    
     private bool isDirectionRight = false;
     private int turnCountRight = 0;
     private int turnCountLeft = 0;  
@@ -34,35 +41,57 @@ public class WheelController : MonoBehaviour
     {
         Vector3 lookVec = new Vector3(player.GetAxis("WheelRCX"), player.GetAxis("WheelRCY"), 4096);
 
+        lastRotation = currentRotation;
+
         if (lookVec.x != 0 && lookVec.y != 0) //player is interacting
         {
-            lastRotation = transform.rotation.eulerAngles;
-            targetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles;
-            if (targetRotation.z >= 0f && targetRotation.z <= 150f ||  //rotated left
-                targetRotation.z <= 360 && targetRotation.z >= 210f) //rotating right
+            targetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
+            Debug.Log(targetRotation);
+        } else
+        {
+            if(accumulatedRotation != 0)
             {
-                transform.rotation = Quaternion.LookRotation(lookVec, Vector3.back);
+                targetRotation = accumulatedRotation * 0.9f;
+                while (targetRotation >= 360f)
+                {
+                    targetRotation -= 360f;
+                }
+                while (targetRotation < 0)
+                {
+                    targetRotation += 360f;
+                }
+
+                if (targetRotation < 2f || targetRotation > 358f)
+                {
+                    targetRotation = 0f;
+                }
+                //Debug.Log(targetRotation);
             }
             
-            //currentRotationSpeed = lastRotation - transform.rotation.eulerAngles;
-        } else
-        { //player is not interacting
-            transform.rotation = Quaternion.Lerp(transform.rotation, defaultRotation, 0.05f);
+        }
+
+
+        if (targetRotation > 300f && lastRotation < 60f)
+        {
+            lastRotation += 360f;
+        }
+        if (targetRotation < 60f && lastRotation > 300f)
+        {
+            lastRotation -= 360f;
+        }
+        rotationDiff = targetRotation - lastRotation;
+
+        if (accumulatedRotation + rotationDiff >= RotationAngle * -1 &&
+            accumulatedRotation + rotationDiff <= RotationAngle)
+        {
+            accumulatedRotation += rotationDiff;
+            currentRotation = targetRotation;
+            transform.Rotate(new Vector3(0f, 0f, rotationDiff));
         }
 
 
         float zRotation = transform.rotation.eulerAngles.z;
         wheelDirection = 0f;
-        if (zRotation < 150f) //left rotation
-        {
-            wheelDirection = zRotation / 150 * -1;
-        }
-        else
-        {
-            if (zRotation > 210f)
-            {
-                wheelDirection = 1 - ((zRotation - 210) / 150);
-            }
-        }        
+        wheelDirection = (accumulatedRotation / RotationAngle)*-1;
     }
 }
