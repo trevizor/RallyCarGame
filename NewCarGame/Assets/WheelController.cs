@@ -13,6 +13,8 @@ public class WheelController : MonoBehaviour
     private float lastRotation;
     private float rotationDiff;
     private float lastTargetRotation;
+    private float firstTouchRotation;
+    private bool holdingWheel = false;
 
     private Player player;
 
@@ -40,19 +42,29 @@ public class WheelController : MonoBehaviour
 
         lastRotation = currentRotation;
 
-        if (lookVec.x != 0 && lookVec.y != 0) //player is interacting
+        if (lookVec.x != 0 || lookVec.y != 0) //player is interacting
         {
-            if(lastTargetRotation == 0)
+            if (!holdingWheel)
             {
-                lastTargetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
+                holdingWheel = true;
+                firstTouchRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
             }
             float currentTargetRotation = Quaternion.LookRotation(lookVec, Vector3.back).eulerAngles.z;
-            targetRotation = currentTargetRotation;
-            //targetRotation = accumulatedRotation + (currentTargetRotation - lastTargetRotation);
-            Debug.Log(targetRotation);
+            //targetRotation = currentTargetRotation;
+            targetRotation = currentTargetRotation - firstTouchRotation;
+            while (targetRotation >= 360f)
+            {
+                targetRotation -= 360f;
+            }
+            while (targetRotation < 0)
+            {
+                targetRotation += 360f;
+            }
+
+            Debug.Log(targetRotation + " / " + firstTouchRotation);
         } else //player has released the wheel
         {
-            
+            holdingWheel = false;
             if (accumulatedRotation != 0)
             {
                 targetRotation = accumulatedRotation * 0.9f;
@@ -69,7 +81,6 @@ public class WheelController : MonoBehaviour
                 {
                     targetRotation = 0f;
                 }
-                lastTargetRotation = targetRotation;
             }
             
         }
@@ -92,7 +103,7 @@ public class WheelController : MonoBehaviour
             currentRotation = targetRotation;
             transform.Rotate(new Vector3(0f, 0f, rotationDiff));
         }
-
+        //firstTouchRotation = accumulatedRotation;
 
         float zRotation = transform.rotation.eulerAngles.z;
         wheelDirection = 0f;
