@@ -24,6 +24,10 @@ public class Car : MonoBehaviour {
     public bool RWD;
     public bool AWD;
 
+    //make flips better
+    private Vector3 defaultCenterOfMass;
+    private bool fourWheelsOnGround = false;
+
     public float engineTorque = 500.0f;
 	public float brakeTorque = 200.0f;
 	public float maxSteerAngle = 20.0f;
@@ -38,6 +42,7 @@ public class Car : MonoBehaviour {
 	void Start () {
 		rBody = GetComponent<Rigidbody> ();
         player = ReInput.players.GetPlayer(0);
+        defaultCenterOfMass = rBody.centerOfMass;
         rBody.centerOfMass = centerOfMass.localPosition;
         wheelController = WheelSprite.GetComponent<WheelController>();
     }
@@ -55,6 +60,17 @@ public class Car : MonoBehaviour {
     }
 
     void FixedUpdate () {
+        if(FRWheel.isGrounded && FLWheel.isGrounded && RRWheel.isGrounded && RLWheel.isGrounded)
+        {
+            fourWheelsOnGround = true;
+            rBody.centerOfMass = centerOfMass.localPosition;
+        } else
+        {
+            fourWheelsOnGround = false;
+            rBody.centerOfMass = defaultCenterOfMass;
+        }
+            
+
         //Debug.Log(wheelDirection + " / " + accInput + "/ " + brakeInput);
         //Debug.Log(player.GetAxis("Wheel") + " / " + player.GetAxis("Accelerator") + "/ " + player.GetAxis("Brake"));
         if (AWD)
