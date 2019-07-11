@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 2da87178a40389243b4a2900aad23b5c
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 90
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Stanwick
+  fontNames:
+  - Stanwick
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 173833c87429b6b4f8815effb2c12120, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

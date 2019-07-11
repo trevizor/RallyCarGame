@@ -61,25 +61,19 @@ public class WheelController : MonoBehaviour
                 targetRotation += 360f;
             }
 
-            Debug.Log(targetRotation + " / " + firstTouchRotation);
         } else //player has released the wheel
         {
             holdingWheel = false;
             if (accumulatedRotation != 0)
             {
-                targetRotation = accumulatedRotation * 0.9f;
-                while (targetRotation >= 360f)
+                targetRotation = accumulatedRotation * 0.94f;
+                while (targetRotation > 360f)
                 {
                     targetRotation -= 360f;
                 }
                 while (targetRotation < 0)
                 {
                     targetRotation += 360f;
-                }
-
-                if (targetRotation < 2f || targetRotation > 358f)
-                {
-                    targetRotation = 0f;
                 }
             }
             
@@ -102,6 +96,14 @@ public class WheelController : MonoBehaviour
             accumulatedRotation += rotationDiff;
             currentRotation = targetRotation;
             transform.Rotate(new Vector3(0f, 0f, rotationDiff));
+        } else
+        {
+            if (!holdingWheel)
+            {
+                accumulatedRotation += rotationDiff;
+                currentRotation = targetRotation;
+                transform.Rotate(new Vector3(0f, 0f, rotationDiff));
+            }
         }
         //firstTouchRotation = accumulatedRotation;
 
@@ -109,4 +111,5 @@ public class WheelController : MonoBehaviour
         wheelDirection = 0f;
         wheelDirection = (accumulatedRotation / RotationAngle)*-1;
     }
+
 }

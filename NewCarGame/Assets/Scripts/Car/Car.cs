@@ -24,6 +24,23 @@ public class Car : MonoBehaviour {
     public bool RWD;
     public bool AWD;
 
+    //GEARS
+    private static float[] GearRatio =
+           new float[]{
+               3.708f,
+               2.410f,
+               1.722f,
+               1.294f,
+               1.023f,
+               0.849f
+           };
+    private float ReverseGearRatio = 3.708f;
+    public float MaxEngineRPM = 3000.0f;
+    public float MinEngineRPM  = 1000.0f;
+    private float EngineRPM = 0.0f;
+    [HideInInspector]
+    public int CurrentGear = 0;
+
     //make flips better
     private Vector3 defaultCenterOfMass;
     private bool fourWheelsOnGround = false;
@@ -54,40 +71,54 @@ public class Car : MonoBehaviour {
 
     private void Update()
     {
-        wheelDirection = wheelController.wheelDirection; //maneiro controls
+        wheelDirection = GameObject.FindObjectOfType<WheelController>().wheelDirection; //maneiro controls
         accInput = player.GetAxis("Accelerator");
         brakeInput = player.GetAxis("Brake");
     }
 
-    void FixedUpdate () {
-        if(FRWheel.isGrounded && FLWheel.isGrounded && RRWheel.isGrounded && RLWheel.isGrounded)
+    void CalculateCenterOfMassPosition ()
+    {
+        if (FRWheel.isGrounded && FLWheel.isGrounded && RRWheel.isGrounded && RLWheel.isGrounded) //changes the center of mass to create cool flips and crashes when not touching the ground
         {
             fourWheelsOnGround = true;
-            rBody.centerOfMass = centerOfMass.localPosition;
-        } else
+            rBody.centerOfMass = (centerOfMass.localPosition + rBody.centerOfMass * 3) / 4;  //it takes 4 physics frames to fully change the center of mass location, to prevent crazy motions
+        }
+        else
         {
             fourWheelsOnGround = false;
-            rBody.centerOfMass = defaultCenterOfMass;
+            rBody.centerOfMass = (defaultCenterOfMass + rBody.centerOfMass * 3) / 4;
         }
-            
+    }
 
-        //Debug.Log(wheelDirection + " / " + accInput + "/ " + brakeInput);
-        //Debug.Log(player.GetAxis("Wheel") + " / " + player.GetAxis("Accelerator") + "/ " + player.GetAxis("Brake"));
+    void FixedUpdate () {
+
+        CalculateCenterOfMassPosition();
+
+        float engineTorqueOnCurrentGear = engineTorque * GearRatio[CurrentGear];
+
         if (AWD)
             RWD = FWD = true;
-
+        
         if (RWD)
         {
-            RRWheel.motorTorque = accInput * engineTorque;
-            RLWheel.motorTorque = accInput * engineTorque;
+            RRWheel.motorTorque = accInput * engineTorqueOnCurrentGear;
+            RLWheel.motorTorque = accInput * engineTorqueOnCurrentGear;
+            EngineRPM = (RRWheel.rpm + RLWheel.rpm) / 2 * GearRatio[CurrentGear];
         }
         if (FWD) {
-            FRWheel.motorTorque = accInput * engineTorque;
-            FLWheel.motorTorque = accInput * engineTorque;
+            FRWheel.motorTorque = accInput * engineTorqueOnCurrentGear;
+            FLWheel.motorTorque = accInput * engineTorqueOnCurrentGear;
+            EngineRPM = (FLWheel.rpm + FRWheel.rpm) / 2 * GearRatio[CurrentGear];
         }
-        
+        if (AWD)
+            EngineRPM = (FLWheel.rpm + FRWheel.rpm + RRWheel.rpm + RLWheel.rpm) / 4 * GearRatio[CurrentGear]; //
+
+
+        Debug.Log(EngineRPM + " RPM // gear: " + CurrentGear);
+        ShiftGears();
+
         //TODO: create reverse button on interface
-		if (rBody.velocity.magnitude < 2 && brakeInput > 0) {
+        if (rBody.velocity.magnitude < 2 && brakeInput > 0) {
 			isReversing = true;
 		}
 
@@ -95,16 +126,16 @@ public class Car : MonoBehaviour {
 			isReversing = false;
 		}
 
-		if (isReversing) {
+        if (isReversing) {
             if (RWD)
             {
-                RRWheel.motorTorque = -brakeInput * engineTorque;
-                RLWheel.motorTorque = -brakeInput * engineTorque;
+                RRWheel.motorTorque = -brakeInput * engineTorque * ReverseGearRatio;
+                RLWheel.motorTorque = -brakeInput * engineTorque * ReverseGearRatio;
             }
             if (FWD)
             {
-                FRWheel.motorTorque = -brakeInput * engineTorque;
-                FLWheel.motorTorque = -brakeInput * engineTorque;
+                FRWheel.motorTorque = -brakeInput * engineTorque * ReverseGearRatio;
+                FLWheel.motorTorque = -brakeInput * engineTorque * ReverseGearRatio;
             }
 		} else {
 			FRWheel.brakeTorque = brakeInput * brakeTorque;
@@ -115,6 +146,52 @@ public class Car : MonoBehaviour {
         
         FRWheel.steerAngle = wheelDirection * maxSteerAngle;
         FLWheel.steerAngle = wheelDirection * maxSteerAngle;
-        //Debug.Log(FRWheel.steerAngle);
 	}
+
+    void ShiftGears()
+    {
+        // this funciton shifts the gears of the vehcile, it loops through all the gears, checking which will make
+        // the engine RPM fall within the desired range. The gear is then set to this "appropriate" value.
+        int AppropriateGear = CurrentGear;
+        WheelCollider targetWheel;
+        if (FWD)
+        {
+            targetWheel = FLWheel;
+        } else
+        {
+            targetWheel = RLWheel;
+        }
+        
+        if (EngineRPM >= MaxEngineRPM)
+        {
+            
+
+            for (var i = 0; i < GearRatio.Length; i++)
+            {
+                if (targetWheel.rpm * GearRatio[i] < MaxEngineRPM)
+                {
+                    AppropriateGear = i;
+                    break;
+                }
+            }
+
+            CurrentGear = AppropriateGear;
+        }
+
+        if (EngineRPM <= MinEngineRPM)
+        {
+            AppropriateGear = CurrentGear;
+
+            for (var j = GearRatio.Length - 1; j >= 0; j--)
+            {
+                if (targetWheel.rpm * GearRatio[j] > MinEngineRPM)
+                {
+                    AppropriateGear = j;
+                    break;
+                }
+            }
+
+            CurrentGear = AppropriateGear;
+        }
+    }
 }
