@@ -1,0 +1,24 @@
+{
+	"version": "0.1",
+	"modeList": [
+		{
+			"title": "Rally",
+			"levelList":[
+				{
+					"title":"Learning the ropes",
+					"scene": "tutorial"
+				}
+			]
+		},
+		{
+			"title": "Circuit",
+			"levelList":[
+				{
+					"title":"Learning the ropes",
+					"scene": "tutorial"
+				}				
+			]
+		},
+	]
+
+}
