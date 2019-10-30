@@ -39722,6 +39722,21 @@ PrefabInstance:
       propertyPath: WheelSprite
       value: 
       objectReference: {fileID: 1252271645}
+    - target: {fileID: 308257331635667933, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: engineTorque
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 308257331635667933, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: FWD
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 308257331635667933, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: AWD
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7219557308840915951, guid: 340c037a1aaa0a5498c4c659b0b1799c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -39776,6 +39791,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 77707577406675481, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: m_SidewaysFriction.m_ExtremumSlip
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2206095114115825877, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: m_SidewaysFriction.m_ExtremumSlip
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362003435497393625, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: m_SidewaysFriction.m_ExtremumSlip
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 314762855056721471, guid: 340c037a1aaa0a5498c4c659b0b1799c,
+        type: 3}
+      propertyPath: m_SidewaysFriction.m_ExtremumSlip
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340c037a1aaa0a5498c4c659b0b1799c, type: 3}
@@ -39850,6 +39885,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7157130340609687773, guid: 83dbe78cfbe59f145ada67fd6339fd3a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972268057854256018, guid: 83dbe78cfbe59f145ada67fd6339fd3a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -343.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972268057854256018, guid: 83dbe78cfbe59f145ada67fd6339fd3a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972268057854256018, guid: 83dbe78cfbe59f145ada67fd6339fd3a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 165.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972268057977092333, guid: 83dbe78cfbe59f145ada67fd6339fd3a,
+        type: 3}
+      propertyPath: RotationAngle
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83dbe78cfbe59f145ada67fd6339fd3a, type: 3}

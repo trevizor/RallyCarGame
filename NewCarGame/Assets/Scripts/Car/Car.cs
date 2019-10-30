@@ -12,6 +12,7 @@ public class Car : MonoBehaviour {
 	public WheelCollider FLWheel;
 	public WheelCollider RRWheel;
 	public WheelCollider RLWheel;
+    public WheelCollider[] carWheels;
 
     public GameObject WheelSprite;
 
@@ -62,6 +63,24 @@ public class Car : MonoBehaviour {
         defaultCenterOfMass = rBody.centerOfMass;
         rBody.centerOfMass = centerOfMass.localPosition;
         wheelController = WheelSprite.GetComponent<WheelController>();
+        carWheels = new WheelCollider[] { FRWheel, FLWheel, RRWheel, RLWheel };
+        Debug.Log(carWheels);
+        WheelFrictionCurve forwardCurve = carWheels[0].forwardFriction;
+        forwardCurve.asymptoteSlip = 2f;
+        forwardCurve.asymptoteValue = 1f;
+        forwardCurve.extremumSlip = 1f;
+        forwardCurve.extremumValue = 2f;
+        forwardCurve.stiffness = 1f;
+        WheelFrictionCurve sideWaysCurve = carWheels[0].sidewaysFriction;
+        sideWaysCurve.asymptoteSlip = 2f;
+        sideWaysCurve.asymptoteValue = 1f;
+        sideWaysCurve.extremumSlip = 1f;
+        sideWaysCurve.extremumValue = 2f;
+        sideWaysCurve.stiffness = 1f;
+        foreach (WheelCollider wheel in carWheels) {
+            wheel.forwardFriction = forwardCurve;
+            wheel.sidewaysFriction = sideWaysCurve;
+        }
     }
 
     public void Reset()

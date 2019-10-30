@@ -208,14 +208,15 @@ MonoBehaviour:
   FLWheel: {fileID: 77707577406675481}
   RRWheel: {fileID: 7362003435497393625}
   RLWheel: {fileID: 314762855056721471}
+  carWheels: []
   WheelSprite: {fileID: 0}
-  FWD: 1
+  FWD: 0
   RWD: 0
-  AWD: 0
+  AWD: 1
   MaxEngineRPM: 2500
   MinEngineRPM: 1000
   CurrentGear: 0
-  engineTorque: 200
+  engineTorque: 400
   brakeTorque: 400
   maxSteerAngle: 40
   targetAlignment: 0
@@ -547,7 +548,7 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.4
+    m_ExtremumSlip: 0.8
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.75
@@ -785,7 +786,7 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.4
+    m_ExtremumSlip: 0.8
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.75
@@ -1007,7 +1008,7 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.4
+    m_ExtremumSlip: 0.8
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.75
@@ -1119,7 +1120,7 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.4
+    m_ExtremumSlip: 0.8
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.75
