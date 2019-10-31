@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WheelController : MonoBehaviour
 {
-    public float RotationAngle = 450f;
+    public float RotationAngle = 250f;
     [HideInInspector]
     public float wheelDirection;
     private float currentRotation = 0f;

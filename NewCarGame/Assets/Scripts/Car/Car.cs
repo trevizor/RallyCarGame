@@ -7,17 +7,17 @@ using UnityEngine;
 public class Car : MonoBehaviour {
     private Player player;
 
-	public Transform centerOfMass;
-	public WheelCollider FRWheel;
-	public WheelCollider FLWheel;
-	public WheelCollider RRWheel;
-	public WheelCollider RLWheel;
+    public Transform centerOfMass;
+    public WheelCollider FRWheel;
+    public WheelCollider FLWheel;
+    public WheelCollider RRWheel;
+    public WheelCollider RLWheel;
     public WheelCollider[] carWheels;
 
     public GameObject WheelSprite;
 
-	private Rigidbody rBody;
-	private float accInput;
+    private Rigidbody rBody;
+    private float accInput;
     private float brakeInput;
     private float wheelDirection;
 
@@ -37,7 +37,7 @@ public class Car : MonoBehaviour {
            };
     private float ReverseGearRatio = 3.708f;
     public float MaxEngineRPM = 3000.0f;
-    public float MinEngineRPM  = 1000.0f;
+    public float MinEngineRPM = 1000.0f;
     private float EngineRPM = 0.0f;
     [HideInInspector]
     public int CurrentGear = 0;
@@ -47,18 +47,18 @@ public class Car : MonoBehaviour {
     private bool fourWheelsOnGround = false;
 
     public float engineTorque = 500.0f;
-	public float brakeTorque = 200.0f;
-	public float maxSteerAngle = 20.0f;
+    public float brakeTorque = 200.0f;
+    public float maxSteerAngle = 20.0f;
 
-	public float targetAlignment = 0;
+    public float targetAlignment = 0;
 
-	public Vector3 targetDirection;
+    public Vector3 targetDirection;
 
-	private bool isReversing = false;
+    private bool isReversing = false;
     private WheelController wheelController;
 
-	void Start () {
-		rBody = GetComponent<Rigidbody> ();
+    void Start() {
+        rBody = GetComponent<Rigidbody>();
         player = ReInput.players.GetPlayer(0);
         defaultCenterOfMass = rBody.centerOfMass;
         rBody.centerOfMass = centerOfMass.localPosition;
@@ -95,9 +95,9 @@ public class Car : MonoBehaviour {
         brakeInput = player.GetAxis("Brake");
     }
 
-    void CalculateCenterOfMassPosition ()
+    void CalculateCenterOfMassPosition()
     {
-        if (FRWheel.isGrounded && FLWheel.isGrounded && RRWheel.isGrounded && RLWheel.isGrounded) //changes the center of mass to create cool flips and crashes when not touching the ground
+        if (FRWheel.isGrounded || FLWheel.isGrounded || RRWheel.isGrounded || RLWheel.isGrounded) //changes the center of mass to create cool flips and crashes when not touching the ground
         {
             fourWheelsOnGround = true;
             rBody.centerOfMass = (centerOfMass.localPosition + rBody.centerOfMass * 3) / 4;  //it takes 4 physics frames to fully change the center of mass location, to prevent crazy motions
