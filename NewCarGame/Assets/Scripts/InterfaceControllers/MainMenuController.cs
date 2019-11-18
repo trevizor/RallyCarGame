@@ -14,11 +14,15 @@ public class MainMenuController : MonoBehaviour {
 
     public SeasonsData loadedSeasonsData;
 
+    public Camera ModeSelectCamera;
+    public Camera TrackSelectCamera;
+    private Camera MainCameraStartPosition;
+
 	// Use this for initialization
 	void Start () {
         string levelDataPath = Path.Combine(Application.streamingAssetsPath, "level-list.json");
         string loadedJson;
-
+        MainCameraStartPosition = GameObject.Instantiate( ModeSelectCamera );
         TextAsset file = Resources.Load("level-list") as TextAsset;
         Debug.Log(file);
         loadedJson = file.ToString();
@@ -27,32 +31,33 @@ public class MainMenuController : MonoBehaviour {
         loadedSeasonsData = jsonData;
 
         seasonSelectController = SeasonSelectContainer.GetComponent<SeasonSelectController>();
-
-
-
-        ShowMainMenu();
+        
+        ShowSeasonSelect();
 	}
 	
 	public void ShowMainMenu () {
-        MainMenuContainer.gameObject.SetActive(true);
-        SeasonSelectContainer.gameObject.SetActive(false);
-        LevelSelectContainer.gameObject.SetActive(false);
+        //MainMenuContainer.gameObject.SetActive(true);
+        //SeasonSelectContainer.gameObject.SetActive(false);
+        //LevelSelectContainer.gameObject.SetActive(false);
     }
 
     public void ShowSeasonSelect ()
     {
-        Debug.Log("SHOW SEASON SELECT");
-        SeasonSelectContainer.gameObject.SetActive(true);
+        ModeSelectCamera.enabled = true;
+        TrackSelectCamera.enabled = false;
+        //SeasonSelectContainer.gameObject.SetActive(true);
         seasonSelectController.updateLoadedSeasons(loadedSeasonsData.seasonList);
-        MainMenuContainer.gameObject.SetActive(false);
-        LevelSelectContainer.gameObject.SetActive(false);
+        //MainMenuContainer.gameObject.SetActive(false);
+        //LevelSelectContainer.gameObject.SetActive(false);
     }
 
     public void ShowLevelSelect()
     {
-        SeasonSelectContainer.gameObject.SetActive(false);
-        MainMenuContainer.gameObject.SetActive(false);
-        LevelSelectContainer.gameObject.SetActive(true);
+        ModeSelectCamera.enabled = false;
+        TrackSelectCamera.enabled = true;
+        //SeasonSelectContainer.gameObject.SetActive(false);
+        //MainMenuContainer.gameObject.SetActive(false);
+        //LevelSelectContainer.gameObject.SetActive(true);
     }
 
 }

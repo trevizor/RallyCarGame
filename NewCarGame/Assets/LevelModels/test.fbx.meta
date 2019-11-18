@@ -15,6 +15,10 @@ ModelImporter:
     400008: //RootNode
     2000000: Camera
     2100000: No Name
+    2100002: Grass
+    2100004: Rock
+    2100006: Gravel
+    2100008: Wall
     2300000: BezierCurve
     2300002: Race
     3300000: BezierCurve

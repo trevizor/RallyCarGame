@@ -1,0 +1,33 @@
+{
+	"version": "0.1",
+	"seasonList": [
+		{
+			"title": "Rally",
+			"levelList":[
+				{
+					"title":"Mt. Test",
+					"scene": "test2"
+				}				
+			]
+		},
+		{
+			"title": "Circuit",
+			"levelList":[
+				{
+					"title":"Track",
+					"scene": "SampleScene"
+				}				
+			]
+		},
+		{
+			"title": "Play ground",
+			"levelList":[
+				{
+					"title":"Track",
+					"scene": "Playground"
+				}				
+			]
+		}
+	]
+
+}
