@@ -1561,7 +1561,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3972268057304670261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0000013973249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3972268058143919844}
@@ -1570,7 +1570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 347.2, y: -59.5}
+  m_AnchoredPosition: {x: 347.20004, y: -46.900017}
   m_SizeDelta: {x: 150, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3972268057304670267
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   _stickTransform: {fileID: 3972268058143919844}
   _joystickMode: 0
   _digitalModeDeadZone: 0.3
-  _stickRange: 100
+  _stickRange: 160
   _scaleStickRange: 1
   _stickBounds: 0
   _axesToUse: 2
@@ -1799,7 +1799,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         _applyRangeCalibration: 1
   _activateOnSwipeIn: 1
-  _stayActiveOnSwipeOut: 0
+  _stayActiveOnSwipeOut: 1
   _allowTap: 1
   _tapTimeout: 0.25
   _tapDistanceLimit: 10
@@ -2118,7 +2118,7 @@ MonoBehaviour:
   _stickTransform: {fileID: 7157130340047955460}
   _joystickMode: 0
   _digitalModeDeadZone: 0.3
-  _stickRange: 100
+  _stickRange: 160
   _scaleStickRange: 1
   _stickBounds: 0
   _axesToUse: 2
@@ -2202,8 +2202,8 @@ MonoBehaviour:
           m_RotationOrder: 4
         _applyRangeCalibration: 1
   _activateOnSwipeIn: 1
-  _stayActiveOnSwipeOut: 0
-  _allowTap: 0
+  _stayActiveOnSwipeOut: 1
+  _allowTap: 1
   _tapTimeout: 0.25
   _tapDistanceLimit: 10
   _touchRegion: {fileID: 0}
@@ -2276,7 +2276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -375.8007, y: 187.42586}
+  m_AnchoredPosition: {x: -343.5, y: 165.6}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3972268057854256017
@@ -2479,7 +2479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00847d7bf84f9e64ca30cf68d2ed323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationAngle: 900
+  RotationAngle: 500
   wheelDirection: 0
 --- !u!1 &3972268058143919847
 GameObject:
@@ -3268,7 +3268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 12.6}
   m_SizeDelta: {x: 58, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7157130340047955466
